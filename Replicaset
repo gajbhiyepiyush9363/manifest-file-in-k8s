@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: demo-rs
+  namespace: demo-ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-rs
+  template:
+    metadata:
+      labels:
+        app: nginx-rs
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: demo-config
